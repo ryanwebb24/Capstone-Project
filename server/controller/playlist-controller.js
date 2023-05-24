@@ -1,31 +1,35 @@
-const {sequelize} = require("../functions")
+const {sequelize, searchSong, getToken} = require("../functions")
+const config = require("../config")
 
 module.exports = {
-    getPlaylist: () => {},
-    addPlaylist: (req, res) => {
-        const {songTitle, songArtist, songAlbum} = req.body
+    getPlaylist: (req, res) => {
         sequelize.query(`
-            INSERT INTO artist (name)
-            VALUES ('${songArtist}')
-            ON CONFLICT (name) DO NOTHING;
-        
-            INSERT INTO album (name)
-            VALUES ('${songAlbum}')
-            ON CONFLICT (name) DO NOTHING;
-        
-            INSERT INTO tracks (name, artist_id, album_id)
-            SELECT '${songTitle}', artist.artist_id, album.album_id
-            FROM artist
-            JOIN album ON album.name = '${songAlbum}'
-            WHERE artist.name = '${songArtist}';
+            SELECT playlist_id AS id, name FROM playlists
         `)
         .then(dbRes => {
-            console.log(dbRes)
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => console.log(err))
+    },
+    addSongToPlaylist: async(req, res) => {
+        const {songTitle, songArtist, playlistId} = req.body
+        const songData = await searchSong(songTitle, songArtist, await getToken(config.spotify.id, config.spotify.secret))
+        let {name, artist, album, trackId, albumId, artistId, href, externalUrl, popularity} = songData
+        name = name.replace("'", "")
+        artist = artist.replace("'", "")
+        album = album.replace("'","")
+        sequelize.query(`
+            INSERT INTO 
+            tracks (id, name, artist_name, album_name, artist_id, album_id, href, external_url, popularity, playlist_id)
+            VALUES ('${trackId}','${name}','${artist}','${album}','${albumId}','${artistId}','${href}','${externalUrl}','${popularity}',${playlistId})
+        `)
+        .then(() => {
+            res.status(200).send("Playlist Created!")
         })
         .catch(err => {
             console.log(err)
         })
-        res.status(200).send("Playlist Created!")
+        
     },
     updatePlaylist: () => {},
     deletePlaylist: () => {}

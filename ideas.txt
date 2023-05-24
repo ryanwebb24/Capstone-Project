@@ -22,4 +22,22 @@ steps for creating a recommendation:
     then get the tracks by there artist id, genres, and track id
     this will then recommend a list of tracks then get the tracks and display them to the user
     
+database set up 
+create table playlists (
+    playlist_id serial primary key,
+    name varchar(100)
+);
 
+
+create table tracks (
+    id varchar(100) primary key,
+    name varchar(50) not null,
+    artist_name varchar(100) not null,
+    album_name varchar(100) not null,
+    artist_id varchar(100) not null,
+    album_id varchar(100) not null,
+    href varchar(100) not null,
+    external_url varchar(100) not null,
+    popularity int not null,
+    playlist_id int references playlists(playlist_id)
+);
