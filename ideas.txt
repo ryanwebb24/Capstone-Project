@@ -1,0 +1,25 @@
+a web app that when you give it a song it will give you recommendations for other similar songs
+when you give it the song it will respond with the song title and some links to where you can listen
+it will also add that song to a database and all the recommended songs with it
+it can also give you list of your tops songs played
+if you give it a playlist it will return your best genre that matches most of the songs.
+it will then possibly have a music recognition that allows you to if you hear a song find that song and give similar songs to it
+
+
+search for the song using spotify api search 
+you can get the tracks data and then show recommended songs for it
+
+steps for implementing a playlist creater first:
+    start by creating a form that will take inputs of the song title, artist, and album name 
+    it will then send a post request to a backend that then sends that data to a database storing the data
+    then build a button that is a playlist displayer that will do a get request to the backend to display a given playlist 
+    then add a delete button to all of the songs allowing you to remove them from the playlist 
+
+steps for creating a recommendation:
+    start by connecting to the spotify api using a access token
+    then use the search function the end point is: https://api.spotify.com/v1/search (it uses a query string follow the api)
+    then get the correct track and make sure they search by song title and artist 
+    then get the tracks by there artist id, genres, and track id
+    this will then recommend a list of tracks then get the tracks and display them to the user
+    
+

@@ -1,0 +1,10 @@
+Description:
+    This will be a full functioning music recommendation app.
+    It will be able to if given a song it will give you recommended songs.
+    It can when given a playlist it will return the top genre.
+    you can also add those recommended songs to your playlists.
+
+MVP:
+    1. It will be able to get a song as input and send a get request to get the track then a get request for recommendations
+    2. it will send a post request also to add the recommended file to a database saving all of the recommendeds
+    3. it will allow you to sign in to your spotify and have your profile with your top 50 songs and allow you to add recommended to your playlists
