@@ -4,7 +4,7 @@ const path = require("path")
 const app = express()
 
 
-const {getPlaylist, addSongToPlaylist, updatePlaylist, deletePlaylist} = require("./controller/playlist-controller")
+const {getPlaylist, createPlaylist, updatePlaylist, deletePlaylist} = require("./controller/playlist-controller")
 const {getRecommended, updateRecommended} = require("./controller/recommended-controller")
 
 
@@ -15,8 +15,8 @@ app.use(express.static(path.join(process.cwd() + "/client")))
 
 // playlist end-points
 app.get("/playlist", getPlaylist)
-app.post("/playlist", addSongToPlaylist)
-app.post("playlist/:id", updatePlaylist)
+app.post("/playlist", createPlaylist)
+app.post("/playlist/:id", updatePlaylist)
 // app.delete("playlis/:id", deletePlaylist)
 // recommended end-points
 // app.get("/recommended", getRecommended)

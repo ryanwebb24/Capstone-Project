@@ -24,7 +24,6 @@ playlistDropdown.addEventListener("click", () => {
     .then( res => {
         if (res.data.length != 0){
             const playlists = res.data
-            playlistDropdown.innerHTML = ""
             for (let i in playlists){
                 let playlist = document.createElement("option")
                 playlist.id = "playlist-option"
@@ -48,9 +47,8 @@ songForm.addEventListener("submit", event => {
     body = {
         songTitle: songTitle.value,
         songArtist: songArtist.value,
-        playlistId: playlistDropdown.value
     }
-    axios.post("/playlist", body)
+    axios.post(`/playlist/${playlistDropdown.value}`, body)
     .then(res => {alert(res.data)})
     .catch(err => {console.log(err)})
     songTitle.value = ""
