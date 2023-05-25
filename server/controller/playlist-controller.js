@@ -2,7 +2,7 @@ const {sequelize, searchSong, getToken} = require("../functions")
 const config = require("../config")
 
 module.exports = {
-    getPlaylist: (req, res) => {
+    getPlaylists: (req, res) => {
         sequelize.query(`
             SELECT playlist_id AS id, name FROM playlists
         `)
@@ -45,6 +45,25 @@ module.exports = {
             console.log(err)
         })
         
+    },
+    getSinglePlaylist: (req, res) => {
+        const {id} = req.params
+        sequelize.query(`
+            SELECT tracks.name, 
+            artist_name AS artist, 
+            album_name AS album, 
+            external_url AS url,
+            popularity, playlists.name AS playlist_name
+            FROM tracks
+            JOIN playlists
+            ON tracks.playlist_id = playlists.playlist_id
+            WHERE tracks.playlist_id = ${+id}
+        `)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
+        .catch(err => {console.log(err)})
+
     },
     deletePlaylist: () => {}
 }
