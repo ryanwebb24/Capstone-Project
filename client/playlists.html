@@ -15,7 +15,7 @@
     </form>
     <h2>Add a song</h2>
     <form id="song-form">
-        <select name="playlists" id="playlist-selector" required>
+        <select name="playlists" class="playlist-selector" required>
             <option selected="selected" disabled>Select playlist</option>
         </select>
         <label for="song-title">Song Title:</label>
@@ -24,7 +24,12 @@
         <input type="text" id="song-artist">
         <button type="submit" id="song-submit">Add Song</button>
     </form>
+    <select name="playlists" class="playlist-selector" required>
+        <option selected="selected" disabled>Select playlist</option>
+    </select>
+    <button id="playlist-btn">View playlist</button>
     <div id="playlist-container"></div>
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" ></script>
     <script src="./playlists.js"></script>
 </body>

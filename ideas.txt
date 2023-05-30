@@ -41,3 +41,6 @@ create table tracks (
     popularity int not null,
     playlist_id int references playlists(playlist_id)
 );
+
+
+either thermometer or a hot meter for the popularity

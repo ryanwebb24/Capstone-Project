@@ -3,25 +3,11 @@ const songTitle = document.querySelector("#song-title")
 const songArtist = document.querySelector("#song-artist")
 const playlistForm = document.querySelector("#playlist-form")
 const playlistName = document.querySelector("#playlist-name")
-const playlistDropdown = document.querySelector("#playlist-selector")
+const playlistDropdown1 = document.querySelectorAll(".playlist-selector")[0]
+const playlistDropdown2 = document.querySelectorAll(".playlist-selector")[1]
 const playlistContainer = document.querySelector("#playlist-container")
 
-playlistForm.addEventListener("submit", event => {
-    event.preventDefault()
-    body = {
-        name: playlistName.value
-    }
-    axios.post("/playlist", body)
-    .then(res => {
-        updateSelector()
-        playlistName.value = ""
-    })
-    .catch(err => {
-        console.log(err)
-    }) 
-})
-
-function updateSelector() {
+function updateSelector(playlistDropdown) {
     playlistDropdown.innerHTML = '<option selected="selected" disabled>Select playlist</option>'
     axios.get("/playlist")
     .then( res => {
@@ -44,9 +30,9 @@ function updateSelector() {
     })
     .catch(err => console.log(err))
 }
-function getPlaylist(event) {
-    event.preventDefault()
-    axios.get(`/playlist/${playlistDropdown.value}`)
+
+function getPlaylist() {
+    axios.get(`/playlist/${playlistDropdown1.value}`)
     .then(res => {
         let playlistH2 = document.createElement("h2")
         playlistH2.textContent = "Playlist " + res.data[0].playlist_name + ":"
@@ -72,6 +58,21 @@ function getPlaylist(event) {
     })
     .catch(err => {console.log(err)})
 }
+playlistForm.addEventListener("submit", event => {
+    event.preventDefault()
+    body = {
+        name: playlistName.value
+    }
+    axios.post("/playlist", body)
+    .then(res => {
+        updateSelector(playlistDropdown1)
+        updateSelector(playlistDropdown2)
+        playlistName.value = ""
+    })
+    .catch(err => {
+        console.log(err)
+    }) 
+})
 
 songForm.addEventListener("submit", event => {
     event.preventDefault()
@@ -79,12 +80,14 @@ songForm.addEventListener("submit", event => {
         songTitle: songTitle.value,
         songArtist: songArtist.value,
     }
-    axios.post(`/playlist/${playlistDropdown.value}`, body)
+    axios.post(`/playlist/${playlistDropdown1.value}`, body)
     .then()
     .catch(err => {console.log(err)})
     songTitle.value = ""
     songArtist.value = ""
+    getPlaylist()
 })
-songForm.addEventListener("submit", getPlaylist)
+// need to fix how it doesnt add the most recent playlist
 
-updateSelector()
+updateSelector(playlistDropdown1)
+updateSelector(playlistDropdown2)
