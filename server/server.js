@@ -5,7 +5,7 @@ const app = express()
 
 
 const {getPlaylists, createPlaylist, updatePlaylist, deletePlaylist, getSinglePlaylist} = require("./controller/playlist-controller")
-const {getRecommended, updateRecommended} = require("./controller/recommended-controller")
+const {getRecommended, addRecommended} = require("./controller/recommended-controller")
 
 
 
@@ -18,9 +18,10 @@ app.get("/playlist", getPlaylists)
 app.post("/playlist", createPlaylist)
 app.post("/playlist/:id", updatePlaylist)
 app.get("/playlist/:id", getSinglePlaylist)
+//may add delete later
 // app.delete("playlis/:id", deletePlaylist)
 // recommended end-points
-// app.get("/recommended", getRecommended)
-// app.post("/recommended", addRecommended)
+app.get("/recommended", getRecommended)
+app.post("/recommended", addRecommended)
 
 app.listen(config.app.port, () => {console.log(`Server running on port ${config.app.port}`)})

@@ -15,7 +15,7 @@
     </form>
     <h2>Add a song</h2>
     <form id="song-form">
-        <select name="playlists" class="playlist-selector" required>
+        <select name="playlists" class="playlist-selector" id="song-selector" required>
             <option selected="selected" disabled>Select playlist</option>
         </select>
         <label for="song-title">Song Title:</label>
@@ -24,7 +24,7 @@
         <input type="text" id="song-artist">
         <button type="submit" id="song-submit">Add Song</button>
     </form>
-    <select name="playlists" class="playlist-selector" required>
+    <select name="playlists" class="playlist-selector" id="playlist-selector" required>
         <option selected="selected" disabled>Select playlist</option>
     </select>
     <button id="playlist-btn">View playlist</button>

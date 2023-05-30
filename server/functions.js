@@ -48,6 +48,15 @@ functions = {
           popularity: song.popularity,
           data: song
         }
+    },
+    sanitizeInput: (input) => {
+      const blacklist = [';', '--', '/*', '*/', 'DROP', 'DELETE'];
+      for (const item of blacklist) {
+        if (input.includes(item)) {
+          throw new Error('Invalid input detected.');
+        }
+      }
+      return input;
     }
 }
 

@@ -15,11 +15,13 @@ function updateSelector(playlistDropdown) {
         if (res.data.length != 0){
             const playlists = res.data
             for (let i in playlists){
-                let playlist = document.createElement("option")
-                playlist.id = "playlist-option"
-                playlist.value = playlists[i].id
-                playlist.textContent = playlists[i].name
-                playlistDropdown.appendChild(playlist)
+                if (playlistDropdown.id !== "song-selector" || playlists[i].name !== "recommended") {
+                    let playlist = document.createElement("option")
+                    playlist.id = "playlist-option"
+                    playlist.value = playlists[i].id
+                    playlist.textContent = playlists[i].name
+                    playlistDropdown.appendChild(playlist)
+                }    
             }
         } else {
             let playlist = document.createElement("option")
@@ -36,26 +38,30 @@ function getPlaylist(playlistDropdown) {
     playlistContainer.innerHTML = ""
     axios.get(`/playlist/${playlistDropdown.value}`)
     .then(res => {
-        let playlistH2 = document.createElement("h2")
-        playlistH2.textContent = "Playlist " + res.data[0].playlist_name + ":"
-        playlistContainer.appendChild(playlistH2)
-        for (let i in res.data){
-            let songUl = document.createElement("ul")
-            for (let j in res.data[i]){
-                if (j !== "playlist_name"){
-                    let li = document.createElement("li")
-                    if (j !== "url") {
-                        let songData = res.data[i][j]
-                        li.innerHTML = `<p>${songData}</p>`
-                        songUl.appendChild(li)
-                    }else {
-                        let songData = res.data[i][j]
-                        li.innerHTML = `<a href= "${songData}">Listen here</a> `
-                        songUl.appendChild(li) 
+        if (res.data.length !== 0) {
+            let playlistH2 = document.createElement("h2")
+            playlistH2.textContent = "Playlist " + res.data[0].playlist_name + ":"
+            playlistContainer.appendChild(playlistH2)
+            for (let i in res.data){
+                let songUl = document.createElement("ul")
+                for (let j in res.data[i]){
+                    if (j !== "playlist_name"){
+                        let li = document.createElement("li")
+                        if (j !== "url") {
+                            let songData = res.data[i][j]
+                            li.innerHTML = `<p>${songData}</p>`
+                            songUl.appendChild(li)
+                        }else {
+                            let songData = res.data[i][j]
+                            li.innerHTML = `<a href= "${songData}">Listen here</a> `
+                            songUl.appendChild(li) 
+                        }
                     }
                 }
+                playlistContainer.appendChild(songUl)
             }
-            playlistContainer.appendChild(songUl)
+        } else {
+            alert("Playlist is empty")
         }
     })
     .catch(err => {console.log(err)})

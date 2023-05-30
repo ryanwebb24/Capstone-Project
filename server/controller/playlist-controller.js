@@ -1,4 +1,4 @@
-const {sequelize, searchSong, getToken} = require("../functions")
+const {sequelize, searchSong, getToken, sanitizeInput} = require("../functions")
 const config = require("../config")
 
 module.exports = {
@@ -11,59 +11,77 @@ module.exports = {
         })
         .catch(err => console.log(err))
     },
-    createPlaylist: (req, res) => {
-        const {name} = req.body
-        sequelize.query(`
-            INSERT INTO playlists (name)
-            VALUES ('${name}')
-        `)
-        .then(() => {
-            res.status(200).send("Playlist Created!")
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-    },
-    updatePlaylist: async(req, res) => {
-        const {songTitle, songArtist} = req.body
-        const {id} = req.params
-        const songData = await searchSong(songTitle, songArtist, await getToken(config.spotify.id, config.spotify.secret))
-        let {name, artist, album, trackId, albumId, artistId, href, externalUrl, popularity} = songData
-        name = name.replace("'", "")
-        artist = artist.replace("'", "")
-        album = album.replace("'","")
-        sequelize.query(`
-            INSERT INTO 
-            tracks (track_id, name, artist_name, album_name, artist_id, album_id, href, external_url, popularity, playlist_id)
-            VALUES ('${trackId}','${name}','${artist}','${album}','${albumId}','${artistId}','${href}','${externalUrl}','${popularity}',${id})
-        `)
-        .then(() => {
-            res.status(200).send("Song Added!")
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    createPlaylist: async (req, res) => {
+        let {name} = req.body
+        if (name.length !== 0 && name.length < 50) {
+            name = sanitizeInput(name)
+            try {
+                await sequelize.query(`
+                    INSERT INTO playlists (name)
+                    VALUES ('${name}')
+                `)
+                res.status(200).send("Playlist Created!")
+            } catch(err){
+                console.log(err)
+            }
+        } else {
+            res.status(400).send("Incorrect name formatting")
+        }
         
     },
-    getSinglePlaylist: (req, res) => {
-        const {id} = req.params
-        sequelize.query(`
-            SELECT tracks.name, 
-            artist_name AS artist, 
-            album_name AS album, 
-            external_url AS url,
-            popularity, playlists.name AS playlist_name
-            FROM tracks
-            JOIN playlists
-            ON tracks.playlist_id = playlists.playlist_id
-            WHERE tracks.playlist_id = ${+id}
-        `)
-        .then(dbRes => {
-            res.status(200).send(dbRes[0])
-        })
-        .catch(err => {console.log(err)})
-
+    updatePlaylist: async(req, res) => {
+        let {songTitle, songArtist} = req.body
+        let {id} = req.params
+        if (songTitle.length !== 0 && songArtist.length !== 0) {
+            songArtist = sanitizeInput(songArtist)
+            songTitle = sanitizeInput(songTitle)
+            id = sanitizeInput(id)
+            let songData = await searchSong(songTitle, songArtist, await getToken(config.spotify.id, config.spotify.secret))
+            let {name, artist, album, trackId, albumId, artistId, href, externalUrl, popularity} = songData
+            name = name.replace("'", "")
+            artist = artist.replace("'", "")
+            album = album.replace("'","")
+            try {
+                await sequelize.query(`
+                INSERT INTO tracks
+                    (track_id, name, artist_name, album_name, artist_id, album_id, href, external_url, popularity, playlist_id)
+                VALUES
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                `, {
+                replacements: [
+                    trackId, name, artist, album, albumId, artistId, href, externalUrl, popularity, id
+                ],
+                });
+                res.status(200).send("Song Added!");
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            res.status(400).send("Incorrect input for song title and artist")
+        }
+        
+    },
+    getSinglePlaylist: async (req, res) => {
+        let {id} = req.params
+        id = sanitizeInput(id)
+        try {
+            const result = await sequelize.query(`
+                SELECT tracks.name, 
+                artist_name AS artist, 
+                album_name AS album, 
+                external_url AS url,
+                popularity, playlists.name AS playlist_name
+                FROM tracks
+                JOIN playlists
+                ON tracks.playlist_id = playlists.playlist_id
+                WHERE tracks.playlist_id = ${+id}
+            `)
+            res.status(200).send(result[0])
+        }
+        catch(err) {
+            res.status(400).send("Invalid id")
+            console.log(err)
+        }
     },
     deletePlaylist: () => {}
 }
