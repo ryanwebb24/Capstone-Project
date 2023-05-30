@@ -3,9 +3,10 @@ const songTitle = document.querySelector("#song-title")
 const songArtist = document.querySelector("#song-artist")
 const playlistForm = document.querySelector("#playlist-form")
 const playlistName = document.querySelector("#playlist-name")
-const playlistDropdown1 = document.querySelectorAll(".playlist-selector")[0]
-const playlistDropdown2 = document.querySelectorAll(".playlist-selector")[1]
+const addSongPlaylistDropdown = document.querySelectorAll(".playlist-selector")[0]
+const playlistViewDropdown = document.querySelectorAll(".playlist-selector")[1]
 const playlistContainer = document.querySelector("#playlist-container")
+const playlistBtn = document.querySelector("#playlist-btn")
 
 function updateSelector(playlistDropdown) {
     playlistDropdown.innerHTML = '<option selected="selected" disabled>Select playlist</option>'
@@ -31,8 +32,9 @@ function updateSelector(playlistDropdown) {
     .catch(err => console.log(err))
 }
 
-function getPlaylist() {
-    axios.get(`/playlist/${playlistDropdown1.value}`)
+function getPlaylist(playlistDropdown) {
+    playlistContainer.innerHTML = ""
+    axios.get(`/playlist/${playlistDropdown.value}`)
     .then(res => {
         let playlistH2 = document.createElement("h2")
         playlistH2.textContent = "Playlist " + res.data[0].playlist_name + ":"
@@ -65,8 +67,8 @@ playlistForm.addEventListener("submit", event => {
     }
     axios.post("/playlist", body)
     .then(res => {
-        updateSelector(playlistDropdown1)
-        updateSelector(playlistDropdown2)
+        updateSelector(addSongPlaylistDropdown)
+        updateSelector(playlistViewDropdown)
         playlistName.value = ""
     })
     .catch(err => {
@@ -80,14 +82,17 @@ songForm.addEventListener("submit", event => {
         songTitle: songTitle.value,
         songArtist: songArtist.value,
     }
-    axios.post(`/playlist/${playlistDropdown1.value}`, body)
-    .then()
-    .catch(err => {console.log(err)})
+    axios.post(`/playlist/${addSongPlaylistDropdown.value}`, body)
+    .then(res => alert(res.data))
+    .catch(err => console.log(err))
     songTitle.value = ""
     songArtist.value = ""
-    getPlaylist()
+    getPlaylist(addSongPlaylistDropdown)
+})
+playlistBtn.addEventListener("click", () => {
+    getPlaylist(playlistViewDropdown)
 })
 // need to fix how it doesnt add the most recent playlist
 
-updateSelector(playlistDropdown1)
-updateSelector(playlistDropdown2)
+updateSelector(addSongPlaylistDropdown)
+updateSelector(playlistViewDropdown)
