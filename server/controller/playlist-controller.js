@@ -66,7 +66,7 @@ module.exports = {
         id = sanitizeInput(id)
         try {
             const result = await sequelize.query(`
-                SELECT tracks.name, 
+                SELECT tracks.id, tracks.name, 
                 artist_name AS artist, 
                 album_name AS album, 
                 external_url AS url,
@@ -83,5 +83,18 @@ module.exports = {
             console.log(err)
         }
     },
-    deletePlaylist: () => {}
+    deletePlaylist: async (req, res) => {
+        let {id} = req.params
+        id = sanitizeInput(id)
+        try {
+            await sequelize.query(`
+                DELETE FROM tracks
+                WHERE id = ${id}
+            `)
+            res.status(200).send("Deleted Song")
+        } catch(err) {
+            res.status(400).send("Invalid id")
+            console.log(err)
+        }
+    }
 }

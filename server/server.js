@@ -18,8 +18,7 @@ app.get("/playlist", getPlaylists)
 app.post("/playlist", createPlaylist)
 app.post("/playlist/:id", updatePlaylist)
 app.get("/playlist/:id", getSinglePlaylist)
-//may add delete later
-// app.delete("playlis/:id", deletePlaylist)
+app.delete("/playlist/:id", deletePlaylist)
 // recommended end-points
 app.get("/recommended", getRecommended)
 app.post("/recommended", addRecommended)

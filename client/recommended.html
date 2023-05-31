@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./recommended.css">
+    <link rel="stylesheet" href="./styles/recommended.css">
     <title>Recommended Tracks</title>
 </head>
 <body>
-    <h1>Get a recommended song</h1>
-    <form id="recommended-form">
-        <label for="track-name">Enter song title:</label>
-        <input type="text" id="track-name">
-        <label for="artist-name">Enter artist:</label>
-        <input type="text" id="artist-name">
-        <button id="recommended-btn">Get recommended</button>
-    </form> 
-    <div id="recommended-container">
-        <ul id="recommended-list"></ul>
-    </div>
+    <header>
+        <h1>Get a recommended song</h1>
+    </header>
+    <section>
+        <form id="recommended-form">
+            <label for="track-name">Enter song title:</label>
+            <input type="text" id="track-name">
+            <label for="artist-name">Enter artist:</label>
+            <input type="text" id="artist-name">
+            <button id="recommended-btn">Get recommended</button>
+        </form>
+    </section>
+    <section>
+        <div id="recommended-container">
+            <ul id="recommended-list"></ul>
+        </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./recommended.js"></script>
+    <script src="./scripts/recommended.js"></script>
 </body>
 </html>

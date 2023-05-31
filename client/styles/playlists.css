@@ -1,0 +1,217 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Roboto;
+}
+
+h2 {
+  color: white;
+  opacity: 0;
+  font-size: 5rem;
+  animation: fadeIn 2s ease forwards;
+}
+.intro {
+  height: 100vh;
+  background-color:  rgb(45, 45, 45, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: #ece0dc;
+  transform: scale(0, 0);
+  animation: animate 1s ease-in forwards 2s;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("./images/pexels-miguel-á-padriñán-167092.jpg");
+  background-size: cover;
+}
+
+@keyframes animate {
+  0% {
+    transform: scale(0, 0.005);
+  }
+  50% {
+    transform: scaleY(0.005);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(45, 45, 45, 0.75);
+    padding: 5px;
+    border-radius: 5px;
+}
+/* for add song */
+#song-adder {
+    background-color: rgb(45, 45, 45, 0.75);
+    height: 300px;
+    width: 500px;
+    padding: 15px;
+    border-radius: 20px;
+    margin: 10px
+}
+#song-adder > form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#song-selector {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+} 
+#song-title{
+    width: 45%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+}
+#song-artist{
+   width: 45%;
+   height: 50px;
+   border-radius: 5px;
+    border: none;
+    text-align: center;
+}
+#add-song {
+    width: 100%;
+    height: 50px;
+}
+#song-adder > h3 {
+    text-align: center;
+    color: #ece0dc;
+}
+#song-form {
+    position: relative;
+    top: 30px;
+}
+#song-form > *{
+    margin: 10px;
+}
+/* for playlist creater */
+#playlist-name {
+    width: 45%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    text-align: center;
+}
+#playlist-add-btn {
+    width: 45%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+}
+#playlist-form {
+    background-color: rgb(45, 45, 45, 0.75);
+    height: 100px;
+    width: 500px;
+    padding: 15px;
+    border-radius: 20px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* for the playlist view */
+#playlist-selector {
+    width: 45%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    text-align: center;
+}
+#playlist-btn {
+    width: 45%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+}
+
+#playlist-picker {
+    background-color: rgb(45, 45, 45, 0.75);
+    height: 100px;
+    width: 500px;
+    padding: 15px;
+    border-radius: 20px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* for full playlist */
+#playlist-container {
+    height: 400px;
+    width: 700px;
+    color: #ece0dc;
+    margin: 10px;
+}
+#playlist-title {
+    text-align: center;
+    background-color:  rgb(45, 45, 45, 0.75);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 10px;
+}
+#songs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color:  rgb(45, 45, 45, 0.75);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+#songs > * {
+    margin: 10px ;
+    width: 200px;
+    height: 250px;
+    background-color: #FA5249;
+    border-radius: 20px;
+}

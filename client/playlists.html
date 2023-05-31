@@ -4,33 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="./styles/playlists.css">
     <title>Playlists</title>
 </head>
 <body>
-    <h1>Create a playlist</h1>
-    <form id="playlist-form">
-        <label for="playlist-name">Playlist Name:</label>
-        <input type="text" id="playlist-name">
-        <button type="submit">Create Playlist</button>
-    </form>
-    <h2>Add a song</h2>
-    <form id="song-form">
-        <select name="playlists" class="playlist-selector" id="song-selector" required>
-            <option selected="selected" disabled>Select playlist</option>
-        </select>
-        <label for="song-title">Song Title:</label>
-        <input type="text" id="song-title">
-        <label for="song-artist">Artist:</label>
-        <input type="text" id="song-artist">
-        <button type="submit" id="song-submit">Add Song</button>
-    </form>
-    <select name="playlists" class="playlist-selector" id="playlist-selector" required>
-        <option selected="selected" disabled>Select playlist</option>
-    </select>
-    <button id="playlist-btn">View playlist</button>
-    <div id="playlist-container"></div>
-    
+    <div class="container">
+        <div class="intro">
+            <header>
+                <h2>Create a playlist</h2>
+            </header> 
+        </div>
+        <main>
+            <div class="content">
+                <section id="playlist-adder">
+                    <form id="playlist-form">
+                        <input type="text" id="playlist-name" placeholder="Playlist name">
+                        <button type="submit" id="playlist-add-btn">Create Playlist</button>
+                    </form>
+                </section>
+                <section id="song-adder">
+                    <h3>Add a song</h3>
+                    <form id="song-form">
+                        <select name="playlists" class="playlist-selector" id="song-selector" required>
+                            <option selected="selected" disabled>Select playlist</option>
+                        </select>
+                        <input type="text" id="song-title" placeholder="Song title">
+                        <input type="text" id="song-artist" placeholder="Artist">  
+                        <button type="submit" id="add-song">Add song</button>
+                    </form>
+                </section>
+                <section id="playlist-picker">
+                    <select name="playlists" class="playlist-selector" id="playlist-selector" required>
+                        <option selected="selected" disabled>Select playlist</option>
+                    </select>
+                    <button id="playlist-btn">View playlist</button>
+                </section>
+                <section>
+                    <div id="playlist-container"></div>
+                </section>
+            </div>
+        </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" ></script>
-    <script src="./playlists.js"></script>
+    <script src="./scripts/playlists.js"></script>
 </body>
 </html>
