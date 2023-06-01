@@ -8,6 +8,7 @@ const sequelize = new Sequelize(config.db.connection_str, {
         rejectUnauthorized: false,
       },
     },
+    logging: false
   })
 
 

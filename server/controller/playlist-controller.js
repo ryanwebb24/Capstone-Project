@@ -41,20 +41,39 @@ module.exports = {
             name = name.replace("'", "")
             artist = artist.replace("'", "")
             album = album.replace("'","")
-            try {
-                await sequelize.query(`
-                INSERT INTO tracks
-                    (track_id, name, artist_name, album_name, artist_id, album_id, href, external_url, popularity, playlist_id)
-                VALUES
-                    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                `, {
-                replacements: [
-                    trackId, name, artist, album, albumId, artistId, href, externalUrl, popularity, id
-                ],
-                });
-                res.status(200).send("Song Added!");
-            } catch (err) {
-                console.log(err);
+            let status = true
+            await sequelize.query(`
+                SELECT track_id
+                From tracks
+                WHERE playlist_id = ${id}
+            `)
+            .then(async (dbRes) => {
+                for (let i in dbRes[0]){
+                    if(dbRes[0][i].track_id === trackId){
+                        status = false
+                        break
+                    }
+                }
+            })
+            .catch(err => console.log(err))
+            if (status) {
+                try {
+                    await sequelize.query(`
+                    INSERT INTO tracks
+                        (track_id, name, artist_name, album_name, artist_id, album_id, href, external_url, popularity, playlist_id)
+                    VALUES
+                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    `, {
+                    replacements: [
+                        trackId, name, artist, album, albumId, artistId, href, externalUrl, popularity, id
+                    ],
+                    });
+                    res.status(200).send("Song Added!");
+                } catch (err) {
+                    console.log(err);
+                }
+            } else {
+                res.status(400).send("Song already exists")
             }
         } else {
             res.status(400).send("Incorrect input for song title and artist")
@@ -64,23 +83,27 @@ module.exports = {
     getSinglePlaylist: async (req, res) => {
         let {id} = req.params
         id = sanitizeInput(id)
-        try {
-            const result = await sequelize.query(`
-                SELECT tracks.id, tracks.name, 
-                artist_name AS artist, 
-                album_name AS album, 
-                external_url AS url,
-                popularity, playlists.name AS playlist_name
-                FROM tracks
-                JOIN playlists
-                ON tracks.playlist_id = playlists.playlist_id
-                WHERE tracks.playlist_id = ${+id}
-            `)
-            res.status(200).send(result[0])
-        }
-        catch(err) {
-            res.status(400).send("Invalid id")
-            console.log(err)
+        if (id === "SELECT PLAYLIST") {
+            res.status(400).send("Not a valid playlist")
+        } else {
+            try {
+                const result = await sequelize.query(`
+                    SELECT tracks.id, tracks.name, 
+                    artist_name AS artist, 
+                    album_name AS album, 
+                    external_url AS url,
+                    playlists.name AS playlist_name
+                    FROM tracks
+                    JOIN playlists
+                    ON tracks.playlist_id = playlists.playlist_id
+                    WHERE tracks.playlist_id = ${+id}
+                `)
+                res.status(200).send(result[0])
+            }
+            catch(err) {
+                res.status(400).send("Invalid playlist")
+                console.log(err)
+            }
         }
     },
     deletePlaylist: async (req, res) => {

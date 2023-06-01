@@ -9,6 +9,7 @@ body {
     height: 100%;
     background-size: 100% 100%;
     background-image: url("./images/pexels-elviss-railijs-bitāns-1389429.jpg");
+    background-size: cover;
     
 }
 header {

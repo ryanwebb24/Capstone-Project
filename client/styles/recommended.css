@@ -1,0 +1,211 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Roboto;
+}
+
+h2 {
+  color: white;
+  opacity: 0;
+  font-size: 5rem;
+  animation: fadeIn 2s ease forwards;
+}
+.intro {
+  height: 100vh;
+  background-color: rgb(45, 45, 45, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: #E8EEE5;
+  transform: scale(0, 0);
+  animation: animate 1s ease-in forwards 2s;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("./images/pexels-markus-spiske-92083.jpg");
+  background-size: cover;
+}
+
+@keyframes animate {
+  0% {
+    transform: scale(0, 0.005);
+  }
+  50% {
+    transform: scaleY(0.005);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/* for recommended form */
+#recommended-form {
+  background-color: rgb(45, 45, 45, 0.75);
+  height: 300px;
+  width: 500px;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#recommended-form > input {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #E8EEE5;
+
+}
+#recommended-btn {
+  width: 75%;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #E8EEE5;
+}
+
+#recommended-form > input:hover,
+#recommended-btn:hover {
+  background-color: #ffffff;
+}
+#recommended-container {
+  height: 400px;
+  width: 700px;
+  color: rgb(45, 45, 45);
+  margin: 10px;
+}
+
+#recommended-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(45, 45, 45, 0.75);
+  border-radius: 20px;
+  padding: 0px;
+  list-style-type: none;
+}
+#recommended-list > * {
+    width: 200px;
+  height: 250px;
+  background-color: #E8EEE5;
+  border-radius: 10px;
+  margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.recommended-list-item > *{
+    padding: 5px;
+    text-decoration: none;
+    color: rgb(45, 45, 45);
+}
+
+.play-btn {
+    border: none;
+    font-size: 24pt;
+    background-color: #E8EEE5;
+    color: rgb(45, 45, 45);
+}
+.play-btn:hover {
+    color: rgb(45, 45, 45, 0.75);
+}
+.add-recommended-btn {
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(45, 45, 45);
+    color: #E8EEE5;
+
+}
+.add-recommended-btn:hover, .recommended-list-item > a:hover {
+    background-color: rgb(45, 45, 45, 0.75);
+}
+.recommended-list-item > a{
+    padding: 5px;
+    text-decoration: none;
+    width: 90%;
+    background-color: rgb(45, 45, 45);
+    color: #E8EEE5;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+nav {
+    position: fixed;
+    top: 0px;
+    background-color: rgb(45, 45, 45, 0.75);
+    width: 100%;
+    height: 75px;
+    display: inline-block;
+    text-align: left;
+}
+
+nav > button {
+    height: 85%;
+    width: 125px;
+    background-color: rgb(45, 45, 45, 0.75);
+    text-align: center;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+    color: #E8EEE5;
+    font-size: medium;
+}
+nav > button:hover {
+    background-color: rgb(45, 45, 45);
+}
+nav > p {
+    color: #E8EEE5;
+    font-size: x-large;
+    position: relative;
+    bottom: 53px;
+    width: 100px;
+    left: 45%;
+}

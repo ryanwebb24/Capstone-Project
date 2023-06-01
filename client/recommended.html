@@ -4,27 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles/recommended.css">
     <title>Recommended Tracks</title>
 </head>
 <body>
-    <header>
-        <h1>Get a recommended song</h1>
-    </header>
-    <section>
-        <form id="recommended-form">
-            <label for="track-name">Enter song title:</label>
-            <input type="text" id="track-name">
-            <label for="artist-name">Enter artist:</label>
-            <input type="text" id="artist-name">
-            <button id="recommended-btn">Get recommended</button>
-        </form>
-    </section>
-    <section>
-        <div id="recommended-container">
-            <ul id="recommended-list"></ul>
+    <div class="container">
+        <div class="intro">
+                <h2>GET A RECOMMENDED SONG</h2>
         </div>
-    </section>
+        <main>
+            <div class="content">
+                <nav>
+                    <button onclick="location.href='./index.html';">HOME</button>
+                    <button onclick="location.href='./playlists.html';">PLAYLISTS</button>
+                    <p>RECOMMENDED</p>
+                </nav>
+                <section id="recommended">
+                    <form id="recommended-form">
+                        <input type="text" id="track-name" placeholder="SONG TITLE">
+                        <input type="text" id="artist-name" placeholder="ARTIST">
+                        <button id="recommended-btn">GET RECOMMENDED</button>
+                    </form>
+                </section>
+                <section>
+                    <div id="recommended-container">
+                        <ul id="recommended-list"></ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./scripts/recommended.js"></script>
 </body>

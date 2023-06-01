@@ -7,9 +7,10 @@ const addSongPlaylistDropdown = document.querySelectorAll(".playlist-selector")[
 const playlistViewDropdown = document.querySelectorAll(".playlist-selector")[1]
 const playlistContainer = document.querySelector("#playlist-container")
 const playlistBtn = document.querySelector("#playlist-btn")
+const playlistViewForm = document.querySelector("#playlist-view-form")
 
 function updateSelector(playlistDropdown) {
-    playlistDropdown.innerHTML = '<option selected="selected" disabled>Select playlist</option>'
+    playlistDropdown.innerHTML = '<option selected="selected" disabled>SELECT PLAYLIST</option>'
     axios.get("/playlist")
     .then( res => {
         if (res.data.length != 0){
@@ -31,7 +32,7 @@ function updateSelector(playlistDropdown) {
             playlistDropdown.appendChild(playlist)
         }
     })
-    .catch(err => console.log(err))
+    .catch(err => alert(err.response.data))
 }
 
 function getPlaylist(playlistDropdown) {
@@ -44,21 +45,24 @@ function getPlaylist(playlistDropdown) {
             playlistH2.id = "playlist-title"
             playlistContainer.appendChild(playlistH2)
             let section = document.createElement("section")
-            section.id = "songs"
+            section.id = "song-container"
             for (let i in res.data){
                 let songUl = document.createElement("ul")
+                songUl.classList.add("songs")
                 let deleteBtn = document.createElement("button")
+                deleteBtn.classList.add("song-btn")
                 deleteBtn.innerHTML = "Delete song"
                 for (let j in res.data[i]){
                     if (j !== "playlist_name" && j !== "id"){
                         let li = document.createElement("li")
+                        li.classList.add("single-song")
                         if (j !== "url") {
                             let songData = res.data[i][j]
                             li.innerHTML = `<p>${songData}</p>`
                             songUl.appendChild(li)
                         }else {
                             let songData = res.data[i][j]
-                            li.innerHTML = `<a href= "${songData}">Listen here</a> `
+                            li.innerHTML = `<button class="song-btn"><a href= "${songData}">Listen here</a></button>`
                             songUl.appendChild(li) 
                         }
                     } else if (j === "id"){
@@ -69,7 +73,7 @@ function getPlaylist(playlistDropdown) {
                                 getPlaylist(playlistViewDropdown)
                                 alert(res.data)
                             })
-                            .catch(err => console.log(err))
+                            .catch(err => alert(err.response.data))
                         })
                     }
                 }
@@ -81,7 +85,7 @@ function getPlaylist(playlistDropdown) {
             alert("Playlist is empty")
         }
     })
-    .catch(err => {console.log(err)})
+    .catch(err => alert(err.response.data))
 }
 playlistForm.addEventListener("submit", event => {
     event.preventDefault()
@@ -90,12 +94,13 @@ playlistForm.addEventListener("submit", event => {
     }
     axios.post("/playlist", body)
     .then(res => {
+        alert(res.data)
         updateSelector(addSongPlaylistDropdown)
         updateSelector(playlistViewDropdown)
         playlistName.value = ""
     })
     .catch(err => {
-        console.log(err)
+        alert(err.response.data)
     }) 
 })
 
@@ -110,12 +115,13 @@ songForm.addEventListener("submit", event => {
         getPlaylist(addSongPlaylistDropdown)
         alert(res.data)
     })
-    .catch(err => console.log(err))
+    .catch(err => alert(err.response.data))
     songTitle.value = ""
     songArtist.value = ""
     
 })
-playlistBtn.addEventListener("click", () => {
+playlistViewForm.addEventListener("submit", event => {
+    event.preventDefault()
     getPlaylist(playlistViewDropdown)
 })
 // need to fix how it doesnt add the most recent playlist
